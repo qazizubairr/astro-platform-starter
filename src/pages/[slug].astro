@@ -3,6 +3,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { marked } from 'marked';
 
+// 1. Pre-render each .json file as a route
 export async function getStaticPaths() {
   const files = await fs.readdir('content/pages');
   return files
@@ -13,6 +14,17 @@ export async function getStaticPaths() {
     });
 }
 
+// 2. Load that specific file at runtime using the slug param
+const { slug } = Astro.params;
+const filePath = path.resolve('content/pages', `${slug}.json`);
+
+let pageData;
+try {
+  const file = await fs.readFile(filePath, 'utf-8');
+  pageData = JSON.parse(file);
+} catch (e) {
+  throw new Error(`Page not found for slug: ${slug}`);
+}
 ---
 
 <html lang="en">
