@@ -5,7 +5,6 @@ import { marked } from 'marked';
 
 export async function getStaticPaths() {
   const files = await fs.readdir('content/pages');
-  
   return files
     .filter(file => file.endsWith('.json'))
     .map(file => {
@@ -14,17 +13,6 @@ export async function getStaticPaths() {
     });
 }
 
-const { slug } = Astro.params;
-
-const filePath = path.resolve('content/pages', `${slug}.json`);
-let pageData;
-
-try {
-  const file = await fs.readFile(filePath, 'utf-8');
-  pageData = JSON.parse(file);
-} catch (e) {
-  throw new Error(`Page not found for slug: ${slug}`);
-}
 ---
 
 <html lang="en">
