@@ -1,4 +1,5 @@
 {
     "type": "Page",
-    "title": "about page"
+    "title": "about page",
+    "markdown_content": "*Some content*\n"
 }
