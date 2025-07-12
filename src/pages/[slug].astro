@@ -1,0 +1,16 @@
+---
+import fs from 'fs/promises';
+import path from 'path';
+import { Astro } from 'astro';
+
+const { slug } = Astro.params;
+const contentPath = path.resolve('content/pages', `${slug}.json`);
+const pageData = JSON.parse(await fs.readFile(contentPath, 'utf-8'));
+---
+
+<html>
+  <head><title>{pageData.title}</title></head>
+  <body>
+    <h1>{pageData.title}</h1>
+  </body>
+</html>
