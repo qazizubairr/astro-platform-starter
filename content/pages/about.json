@@ -1,5 +1,5 @@
 {
     "type": "Page",
     "title": "about page",
-    "markdown_content": "*Some contentsss*\n"
+    "markdown_content": "<div style=\"text-align: center background-color : blue\">*Some contentsss*</div>\n\n"
 }
