@@ -1,12 +1,21 @@
 ---
-// src/pages/[slug].astro
 import fs from 'fs/promises';
 import path from 'path';
 import { marked } from 'marked';
 
+export async function getStaticPaths() {
+  const files = await fs.readdir('content/pages');
+  
+  return files
+    .filter(file => file.endsWith('.json'))
+    .map(file => {
+      const slug = file.replace('.json', '');
+      return { params: { slug } };
+    });
+}
+
 const { slug } = Astro.params;
 
-// Load JSON file from content/pages/{slug}.json
 const filePath = path.resolve('content/pages', `${slug}.json`);
 let pageData;
 
