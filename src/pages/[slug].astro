@@ -1,0 +1,31 @@
+---
+// src/pages/[slug].astro
+import fs from 'fs/promises';
+import path from 'path';
+import { marked } from 'marked';
+
+const { slug } = Astro.params;
+
+// Load JSON file from content/pages/{slug}.json
+const filePath = path.resolve('content/pages', `${slug}.json`);
+let pageData;
+
+try {
+  const file = await fs.readFile(filePath, 'utf-8');
+  pageData = JSON.parse(file);
+} catch (e) {
+  throw new Error(`Page not found for slug: ${slug}`);
+}
+---
+
+<html lang="en">
+  <head>
+    <title>{pageData.title}</title>
+  </head>
+  <body>
+    <main>
+      <h1>{pageData.title}</h1>
+      <article set:html={marked.parse(pageData.markdown_content)} />
+    </main>
+  </body>
+</html>
